@@ -1,21 +1,47 @@
-const mysql =require("mysql");
+const express=require('express');
+const con=require('./config');
 
-const con=mysql.createConnection({
-    host:'localhost',
-    user:"root",
-    password:"",
-    database:"test"
-});
+const app= express();
 
-con.connect((err)=>{
+app.get('/', (req, resp)=>{
+con.query('select * from users',(err, result)=>{
     if (err) {
-        console.log("error");    
+        resp.send("error")
+    }else{
+        resp.send(result)
     }
-    else
-    {
-        console.log("connected");
-    }
+
+})
 });
+
+app.listen(5000);
+
+
+
+
+
+
+
+
+
+// const mysql =require("mysql");
+
+// const con=mysql.createConnection({
+//     host:'localhost',
+//     user:"root",
+//     password:"",
+//     database:"test"
+// });
+
+// con.connect((err)=>{
+//     if (err) {
+//         console.log("error");    
+//     }
+//     else
+//     {
+//         console.log("connected");
+//     }
+// });
 
 
 
