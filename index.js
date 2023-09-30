@@ -3,8 +3,10 @@ const con=require('./config');
 
 const app= express();
 
+app.use(express.json());
+
 app.get('/', (req, resp)=>{
-con.query('select * from users',(err, result)=>{
+con.query('select * from user',(err, result)=>{
     if (err) {
         resp.send("error")
     }else{
@@ -12,6 +14,14 @@ con.query('select * from users',(err, result)=>{
     }
 
 })
+});
+
+app.post('/', (req, resp)=>{
+    const data=req.body
+    con.query('Insert into user SET ?', data, (error, result, fields)=>{
+        if(error) error;
+        resp.send(result)
+    })
 });
 
 app.listen(5000);
